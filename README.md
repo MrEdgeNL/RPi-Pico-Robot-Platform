@@ -8,10 +8,10 @@ For keeping everything simple, microPython is used on the Pico.
 
 RPi Pico W is running:
 * core 0: robot controller (loop, 50ms), managing:
-  - real time controller: driving differential drive (takes 2~10ms),
-  - real time controller: onboard led driver (<<ms).
-* core 1: handle communication (loop, pose update ~250ms), via LAN.
-* message queues (2x) (threat safe), so both cores could 'talk' to each other.
+  - real time controller: updating differential drive (takes 2~15ms),
+  - real time controller: updating status led driver (<<ms).
+* core 1: handle communication (loop; pose update ~250ms), via LAN.
+* simple message queues (2x) (threat safe), so both processes could 'talk' to each other.
 
 There is also a simple PC GUI (Tkinter), which:
 * Send simple commands (buttons)
@@ -38,7 +38,7 @@ Simple ascii message, format: "TARGET function [arg1, arg2]"
 ## Coordinates & units used:
 * Odometry: absolute pose.
 * Everything from GUI to robot.py: mm, deg, sec.
-* Class drive.py: mm, rad, sec.
+* Inside drive class: mm, rad, sec.
 
 ## Communication class functionality:
 * _loop():_
