@@ -173,6 +173,7 @@ class Drive:
 
     def close(self):
         self._do_rtc = False
+        self._set_pwm(0,0)
         self._mode = "closing"
 
     def set_wheel_speed(self, v_l=0.0, v_r=0.0):
@@ -320,14 +321,14 @@ class Drive:
     #     self.wheel_base = wheelbase_mm
     #     self.wheel_diameter = wheel_diameter_mm
 
-    def calibrate_drive(self, ticks_to_mm=0.0, wheelbase_mm=0.0): #ticks_to_deg=0.0):
+    def calibrate_drive(self, ticks_to_mm=0.0, wheelbase_mm=0.0): #ToDo: ticks_to_deg=0.0):
         self.ticks_to_dist = ticks_to_mm
         self.wheel_base = wheelbase_mm
 
     def set_rtc_update_period(self,  update_period_ms=100):
         self.update_period_ms = update_period_ms
     
-    def set_motor_pwm(self, pwm_min=0, pwm_max=65536):
+    def set_motor_pwm_range(self, pwm_min=0, pwm_max=65536):
         self.pwm_min = pwm_min
         self.pwm_max = pwm_max
 

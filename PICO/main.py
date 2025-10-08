@@ -94,8 +94,8 @@ class Robot:
                     self.drive.calibrate_drive( float(cmd.args[0]), float(cmd.args[1]) ) #, float(cmd.args[1])
                 elif cmd.command=="set_rtc_update_period":    # ( update_period_ms=100 )
                     self.drive.set_rtc_update_period( int(cmd.args[0]) )
-                elif cmd.command=="set_motor_pwm":    # ( pwm_min )
-                    self.drive.set_motor_pwm( int(cmd.args[0]), int(cmd.args[1]) )
+                elif cmd.command=="set_motor_pwm_range":    # ( pwm_min )
+                    self.drive.set_motor_pwm_range( int(cmd.args[0]), int(cmd.args[1]) )
                 elif cmd.command=="set_motor_pid":    # ( Kp, Ki, Kd )
                     self.drive.set_motor_pid( float(cmd.args[0]), float(cmd.args[1]), float(cmd.args[2]) )
                 elif cmd.command=="set_goal_seeker":    # ( Kp_speed=1.0, Kp_heading=1.0 )
@@ -159,7 +159,7 @@ class Robot:
 # -----------------------------
 # System start: comms & robot loop
 # -----------------------------
-def main():
+def main_robot_loop():
     input_q = SimpleQueue()
     output_q = SimpleQueue()
 
@@ -181,5 +181,5 @@ def main():
         robot.close()
         comm.close()
 
-# --- Run main loop ---
-main()
+# --- Run robot loop ---
+main_robot_loop()
