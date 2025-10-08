@@ -1,0 +1,2 @@
+SSID="network"
+PASSWORD="password"
