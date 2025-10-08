@@ -19,11 +19,12 @@ There is also a simple PC GUI (Tkinter), which:
 * Lists all in/out going messages (left side)
 * Lists all pose updates from pico (right side)
 
-Robot platform:
+## Robot platform:
+Graphical:
 ![Screenshot robot platform.](/pics/RPi_Pico-W_Software_Architecture2.png)
 
-Communication protocol:
-For now simple asci message: "TARGET function [arg1, arg2]"
+## Communication protocol:
+For now simple ascii message: "TARGET function [arg1, arg2]"
 * TARGET: uppercase, 3 character string, identifies target:
   - MSG / LOG: data PICO → PC
   - RBT / DRV / LED: data PC → PICO-module
@@ -35,8 +36,9 @@ For now simple asci message: "TARGET function [arg1, arg2]"
   - MSG & LOG: (currently) no arguments expected.
   - to pico: arguments necessary for current function.
 
-Units used:
+## Units used:
 * Everything from GUI to robot.py: mm, deg, sec.
-* Module: drive.py: mm, rad, sec.
+* Class drive.py: mm, rad, sec.
 
-More information (why/how) about this DIY adventure: [Pico/mPython – smart car DIY](https://retrobuildingtoys.nl/2024/rpi-pico-smart-car/).
+## More information:
+Why/how about this DIY adventure: [Pico/mPython – smart car DIY](https://retrobuildingtoys.nl/2024/rpi-pico-smart-car/).
