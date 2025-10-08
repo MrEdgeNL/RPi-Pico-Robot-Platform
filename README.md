@@ -37,11 +37,33 @@ Simple ascii message, format: "TARGET function [arg1, arg2]"
   - to pico: arguments necessary for current function.
 
 ## Coordinates & units used:
-* Odometry: absolute.
+* Odometry: absolute pose.
 * Everything from GUI to robot.py: mm, deg, sec.
 * Class drive.py: mm, rad, sec.
 
-## Differential drive functionality:
+## Communication class functionality:
+_loop():_
+* Starts the communication loop, on core 1:
+  - Check for incomming messages,
+  - Send outgoing messages.
+
+_close():_
+* Quit the main loop.
+
+## Robot class functionality:
+_loop():_
+* Starts the robot main loop:
+  - Updating RTC's,
+  - Handle (incomming) messages.
+
+_stop():_
+* Stops all RTC's, so basicaly stops the drive from moving.
+
+_close():_
+* Quit the main loop, closes RTC's.
+* (Since the _robot.loop()_ ends, this will also close the communication class inside the function: _main_robot_loop()_.)
+
+## Differential drive class functionality:
 __set_pwm(left_pwm=0, right_pwm=0):_
 * Directly sets both motor pwm's. No further RTC control.
 
@@ -87,12 +109,12 @@ _to_pose(target_x=0.0, target_y=0.0, target_theta_rad=0.0, target_v=0.0):_
 * Set goal pose (x,y,theta), set mode="to_pose" and finalize with set mode="heading_to". Sets RTC flag high.
 
 And some drive settings:
-* _calibrate_drive(ticks_to_mm=0.0, wheelbase_mm=0.0): #ticks_to_deg=0.0):
-* set_rtc_update_period(update_period_ms=50):
-* set_motor_pwm_range(pwm_min=0, pwm_max=65536):
-* set_motor_pid(Kp=1.0, Ki=0.0, Kd=0.0):
-* set_goal_seeker(Kp_speed=1.0, Kp_heading=1.0):
-* set_goal_tolerances(tolerance_dist_mm=15.0, tolerance_heading_deg=5.0):_
+* _calibrate_drive(ticks_to_mm=0.0, wheelbase_mm=0.0): #ToDo: ticks_to_deg=0.0):_
+* _set_rtc_update_period(update_period_ms=50):
+* _set_motor_pwm_range(pwm_min=15000, pwm_max=65536):_
+* _set_motor_pid(Kp=1.0, Ki=0.0, Kd=0.0):_
+* _set_goal_seeker(Kp_speed=1.0, Kp_heading=1.0):_
+* _set_goal_tolerances(tolerance_dist_mm=15.0, tolerance_heading_deg=5.0):_
  
 ## More information:
 The why/how about this DIY adventure: [Pico/mPython – smart car DIY](https://retrobuildingtoys.nl/2024/rpi-pico-smart-car/).
