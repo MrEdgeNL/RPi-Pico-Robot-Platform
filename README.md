@@ -41,71 +41,88 @@ Simple ascii message, format: "TARGET function [arg1, arg2]"
 * Class drive.py: mm, rad, sec.
 
 ## Communication class functionality:
-_loop():_
-* Starts the communication loop, on core 1:
-  - Check for incomming messages,
-  - Send outgoing messages.
+* _loop():_
 
-_close():_
-* Quit the main loop.
+Starts the communication loop, on core 1:
+1. Check for incomming messages,
+2. Send outgoing messages.
+
+* _close():_
+
+Quit the main loop.
 
 ## Robot class functionality:
-_loop():_
-* Starts the robot main loop:
-  - Updating RTC's,
-  - Handle (incomming) messages.
+* _loop():_
 
-_stop():_
-* Stops all RTC's, so basicaly stops the drive from moving.
+Starts the robot main loop:
+1. Updating RTC's,
+2. Handle (incomming) messages.
 
-_close():_
-* Quit the main loop, closes RTC's.
-* (Since the _robot.loop()_ ends, this will also close the communication class inside the function: _main_robot_loop()_.)
+* _stop():_
+
+Stops all RTC's, so basicaly stops the drive from moving.
+
+* _close():_
+
+Quit the main loop, closes RTC's.
+(Since the _robot.loop()_ ends, this will also close the communication class inside the function: _main_robot_loop()_.)
 
 ## Differential drive class functionality:
-__set_pwm(left_pwm=0, right_pwm=0):_
-* Directly sets both motor pwm's. No further RTC control.
+* __set_pwm(left_pwm=0, right_pwm=0):_
 
-__get_deltaticks():_
-* Read deltaticks from both encoders, since last _get_deltaticks():_.
+Directly sets both motor pwm's. No further RTC control.
 
-_update():_
-* Called periodically from robot.py loop:
+* __get_deltaticks():_
+
+Read deltaticks from both encoders, since last _get_deltaticks():_.
+
+* _update():_
+
+Called periodically from robot.py loop:
 1. Updates current pose (always)
 2. Depending on RTC functionality: calculate new wheel speed & update with _set_pwm()_.
 
-_stop():_
-* Stops motor movement: _set_pwm(0,0).
-* Disable RTC functionality.
-* Set mode="idle".
+* _stop():_
 
-_reset():_
-* Call _stop()_
-* Resets: current pose, goal, pid controllers, target speeds etc.
+Stops motor movement: _set_pwm(0,0).
+Disable RTC functionality.
+Set mode="idle".
 
-_close():_
-* Stops motor movement: _set_pwm(0,0).
-* Disable RTC functionality.
+* _reset():_
 
-_set_wheel_speed(v_l=0.0, v_r=0.0):_
-* If RTC is not yet set, reset PID controllers and set mode="direct"
-* Execute PID control on wheel target speeds, during _update()_.
+Call _stop()_
+Resets: current pose, goal, pid controllers, target speeds etc.
 
-set_velocity(robot_v=0.0, robot_omega=0.0):
-* Calculate target wheel speeds, based on wanted robot speeds.
-* Inconsistancy(?): this function assumes already a running RTC flag.
+* _close():_
 
-_move_to(target_x=0.0, target_y=0.0, target_v=0.0):_
-* Set goal pose (x,y), but not final heading, set mode="move_to" and set RTC flag high.
+Stops motor movement: _set_pwm(0,0).
+Disable RTC functionality.
 
-_rotate_to(target_theta_rad=0.0, target_v=0.0):_
-* Set goal heading (theta), could be multiple rotations, set mode="rotate_to" and set RTC flag high.
+* _set_wheel_speed(v_l=0.0, v_r=0.0):_
+
+If RTC is not yet set, reset PID controllers and set mode="direct"
+Execute PID control on wheel target speeds, during _update()_.
+
+* set_velocity(robot_v=0.0, robot_omega=0.0):
+
+Calculate target wheel speeds, based on wanted robot speeds.
+Inconsistancy(?): this function assumes already a running RTC flag.
+
+* _move_to(target_x=0.0, target_y=0.0, target_v=0.0):_
+
+Set goal pose (x,y), but not final heading, set mode="move_to" and set RTC flag high.
+
+* _rotate_to(target_theta_rad=0.0, target_v=0.0):_
+
+Set goal heading (theta), could be multiple rotations, set mode="rotate_to" and set RTC flag high.
   
-_heading_to(target_theta_rad=0.0, target_v=0.0):_
-* Set goal heading (theta), shortest route compared to current pose, set mode="heading_to" and set RTC flag high.
+* _heading_to(target_theta_rad=0.0, target_v=0.0):_
 
-_to_pose(target_x=0.0, target_y=0.0, target_theta_rad=0.0, target_v=0.0):_
-* Set goal pose (x,y,theta), set mode="to_pose" and finalize with set mode="heading_to". Sets RTC flag high.
+Set goal heading (theta), shortest route compared to current pose, set mode="heading_to" and set RTC flag high.
+
+* _to_pose(target_x=0.0, target_y=0.0, target_theta_rad=0.0, target_v=0.0):_
+
+Set goal pose (x,y,theta), set mode="to_pose" and finalize with set mode="heading_to". Sets RTC flag high.
 
 And some drive settings:
 * _calibrate_drive(ticks_to_mm=0.0, wheelbase_mm=0.0): #ToDo: ticks_to_deg=0.0):_
@@ -117,12 +134,12 @@ And some drive settings:
 
 ## Status LED class functionality:
 Self explaining functions, controlling RPi Pico onboard LED:
-_on():
-off():
-toggle_onoff():
-blink_slow():
-blink_fast():
-blink_pattern([pattern_ms]):_
+* _on():_
+* _off():_
+* _toggle_onoff():_
+* _blink_slow():_
+* _blink_fast():_
+* _blink_pattern([pattern_ms]):_
 
 ## More information:
 The why/how about this DIY adventure: [Pico/mPython – smart car DIY](https://retrobuildingtoys.nl/2024/rpi-pico-smart-car/).
