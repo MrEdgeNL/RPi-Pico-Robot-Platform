@@ -17,10 +17,9 @@ There is also a simple PC GUI (Tkinter), which:
 * Send simple commands (buttons)
 * Send user commands (textbox)
 * Lists all in/out going messages (left side)
-* Lists all pose updates from pico (right side)
+* Lists all 'LOG' (pose) updates from pico (right side)
 
 ## Robot platform:
-Graphical:
 ![Screenshot robot platform.](/pics/RPi_Pico-W_Software_Architecture2.png)
 
 ## Communication protocol:
@@ -110,7 +109,7 @@ _to_pose(target_x=0.0, target_y=0.0, target_theta_rad=0.0, target_v=0.0):_
 
 And some drive settings:
 * _calibrate_drive(ticks_to_mm=0.0, wheelbase_mm=0.0): #ToDo: ticks_to_deg=0.0):_
-* _set_rtc_update_period(update_period_ms=50):
+* _set_rtc_update_period(update_period_ms=50):_
 * _set_motor_pwm_range(pwm_min=15000, pwm_max=65536):_
 * _set_motor_pid(Kp=1.0, Ki=0.0, Kd=0.0):_
 * _set_goal_seeker(Kp_speed=1.0, Kp_heading=1.0):_
