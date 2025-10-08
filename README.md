@@ -8,8 +8,8 @@ For keeping everything simple, microPython is used on the Pico.
 
 RPi Pico W is running:
 * core 0: robot controller (loop, 50ms), managing:
-  - real time controller: driving differential drive
-  - real time controller: onboard led driver.
+  - real time controller: driving differential drive (takes 2~10ms),
+  - real time controller: onboard led driver (<<ms).
 * core 1: handle communication (loop, pose update ~250ms), via LAN.
 * message queues (2x) (threat safe), so both cores could 'talk' to each other.
 
@@ -114,6 +114,15 @@ And some drive settings:
 * _set_motor_pid(Kp=1.0, Ki=0.0, Kd=0.0):_
 * _set_goal_seeker(Kp_speed=1.0, Kp_heading=1.0):_
 * _set_goal_tolerances(tolerance_dist_mm=15.0, tolerance_heading_deg=5.0):_
- 
+
+## Status LED class functionality:
+Self explaining functions, controlling RPi Pico onboard LED:
+_on():
+off():
+toggle_onoff():
+blink_slow():
+blink_fast():
+blink_pattern([pattern_ms]):_
+
 ## More information:
 The why/how about this DIY adventure: [Pico/mPython – smart car DIY](https://retrobuildingtoys.nl/2024/rpi-pico-smart-car/).
