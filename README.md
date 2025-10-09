@@ -67,6 +67,17 @@ Stops all RTC's, so basicaly stops the drive from moving.
 Quit the main loop, closes RTC's.
 (Since the _robot.loop()_ ends, this will also close the communication class inside the function: _main_robot_loop()_.)
 
+* Additional functionality by messaging:
+
+The robot as a auto-execute list, which could be filled,started,stopped & cleared by user:
+- "RBT add_cmd target,function,args"
+
+  Will add new message, to robot._cmds_list.
+- "RBT start_cmds", "RBT stop_cmds", "RBT clear_cmds"
+- "RBT run_square distance,CCW,speed"
+
+  Resets drive, empty auto-execute list. Fills auto-execute and runs driving a square of: 'distance', moving either CCW or CW, with 'speed'.
+
 ## Differential drive class functionality:
 * __set_pwm(left_pwm=0, right_pwm=0):_
 
