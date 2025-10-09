@@ -22,6 +22,9 @@ There is also a simple PC GUI (Tkinter), which:
 ## Robot platform:
 ![Screenshot robot platform.](/pics/RPi_Pico-W_Software_Architecture2.png)
 
+## First steps...
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dP9MaJGwAcU?si=Hce4M5bGbaMOqMDp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## Communication protocol:
 Simple ascii message, format: "TARGET function [arg1, arg2]"
 * TARGET: uppercase, 3 character string, identifies target of message:
