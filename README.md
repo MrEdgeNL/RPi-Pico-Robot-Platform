@@ -152,5 +152,12 @@ Self explaining functions, controlling RPi Pico onboard LED:
 * _blink_fast():_
 * _blink_pattern([pattern_ms]):_
 
+## GUI:
+![Screenshot gui.](/pics/RPi_Pico-W_Software_GUI_run_square.png)
+Left side showing:
+* Current drive settings (request by pressing Drive-Info button)
+* New command was given: "RBT run_square 500,CCW,250"
+* Right side is showing the final 2 pose updates for internal commands: "DRV move_to .." & " DRV heading_to ..".
+
 ## More information:
 The why/how about this DIY adventure: [Pico/mPython – smart car DIY](https://retrobuildingtoys.nl/2024/rpi-pico-smart-car/).
