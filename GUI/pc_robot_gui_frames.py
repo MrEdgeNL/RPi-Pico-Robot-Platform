@@ -3,6 +3,8 @@
 Created on Tue Sep 23 10:51:09 2025
 
 @author: Edge
+
+This module should be used within pc_robot_gui.py.
 """
 
 import tkinter as tk
@@ -37,7 +39,8 @@ class ConsoleFrame(ttk.Frame):
         self.bttn_send.pack(side="left", padx=5)
 
         cmdlist= ["DRV to_pose ", "DRV move_to ", "DRV heading_to ", "DRV rotate_to ", "DRV set_velocity ", "DRV set_wheel_speed ", "DRV set_pwm ",
-                  "-----", "DRV set_pose ", "DRV calibrate_drive ", "DRV set_rtc_update_period ", "DRV set_motor_pwm ", "DRV set_motor_pid ", "DRV set_goal_seeker ", "DRV set_goal_tolerances "]
+                  "-----", "RBT run_square 500,CCW,250", "RBT add_cmd ", "RBT stop_cmds ", "RBT start_cmds ", "RBT clear_cmds ",
+                  "-----", "DRV set_pose ", "DRV calibrate_drive ", "DRV set_rtc_update_period ", "DRV set_motor_pwm_range ", "DRV set_motor_pid ", "DRV set_goal_seeker ", "DRV set_goal_tolerances "]
         self.combo_cmd = ttk.Combobox(self.frame_input, values=cmdlist, width=50)
         self.combo_cmd.pack(side="left", expand=True, fill="x", padx=5)
         
@@ -181,4 +184,4 @@ class DriveFrame(ttk.Frame):
 
 # --- Run ---
 if __name__ == "__main__":
-    print("He Koos, you cannot run me.")
+    print("This helper module should be used within pc_robot_gui.py.")

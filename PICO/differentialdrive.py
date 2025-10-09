@@ -113,9 +113,9 @@ class Drive:
 
         # Goal settings
         self.Kp_speed = 2.5
-        self.Kp_heading = 30
-        self.tolerance_dist = 15                    # happy closing position within X [mm] radius
-        self.tolerance_heading = math.radians(5)    # happy closing heading within X [rad]
+        self.Kp_heading = 15
+        self.tolerance_dist = 15                    # happy stop within position within X [mm] radius
+        self.tolerance_heading = math.radians(5)    # happy stop within heading within X [rad]
         self.v_goal = 0.0
         self.w_goal = 0.0
         self._last_goal_dist = 0.0
@@ -245,7 +245,7 @@ class Drive:
 
         # ---- Update odometry ----
         dcenter = (dl_mm + dr_mm) / 2.0
-        dtheta_rad_ave = (dr_mm - dl_mm) / self.wheel_base ####/2
+        dtheta_rad_ave = (dr_mm - dl_mm) / self.wheel_base ####/2 # distance traveld should be average dTheta...
         with self._lock:            
             self.pose.theta += dtheta_rad_ave             
             self.pose.x += dcenter * math.cos(self.pose.theta)  # calce new pose on average direction (=delta_theta/2)
