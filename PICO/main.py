@@ -11,9 +11,10 @@ import time, math
 # -----------------------------
 class Robot:
     def __init__(self, input_q, output_q):
-        self.in_q = input_q
-        self.out_q = output_q
-        self.waypoints = SimpleQueue()
+        self.in_q = input_q         # incomming message que between cores
+        self.out_q = output_q       # outgoing message que between cores
+        self._cmds_list = []        # stores robot messages, like waypoints for drive etc.
+        self._run_cmds = False
         self.led = StatusLED()
         self.led.on()
         self.drive = Drive()
@@ -28,11 +29,50 @@ class Robot:
         cmd = Message(msg)   
         try:
             if cmd.target=="RBT":           # All public robot messages:
-                if cmd.command=="stop":
+                if cmd.command=="stop":                    
                     self.led.blink_slow()
                     self.stop()
                 elif cmd.command=="close":
                     self.close()
+                elif cmd.command=="add_cmd":
+                    cmd_to_store = ""
+                    for idx, attr in enumerate(cmd.args):
+                        if idx==0:
+                            cmd_to_store = attr.upper()
+                        elif idx==1:
+                            cmd_to_store += " " + attr.lower() + " "
+                        else:
+                            cmd_to_store += attr + ","
+                    self._cmds_list.append(cmd_to_store)
+                    print(f">pico: {cmd_to_store}.")
+                    print(self._cmds_list)
+                elif cmd.command=="clear_cmds":
+                    self._run_cmds = False
+                    self._cmds_list = []
+                elif cmd.command=="stop_cmds":
+                    self._run_cmds = False
+                elif cmd.command=="start_cmds":
+                    self._run_cmds = True
+                elif cmd.command=="run_square":
+                    self.drive.reset()
+                    distancex = int(cmd.args[0])
+                    if cmd.args[1]=="ccw":
+                        distancey = distancex
+                        direction = 90
+                    else:
+                        distancey = -distancex
+                        direction = -90
+                    speed = int(cmd.args[2])
+                    self._cmds_list = []
+                    self._cmds_list.append(f"DRV move_to {distancex},0,{speed}")
+                    self._cmds_list.append(f"DRV heading_to {direction},{speed}")
+                    self._cmds_list.append(f"DRV move_to {distancex},{distancey},{speed}")
+                    self._cmds_list.append(f"DRV heading_to {2*direction},{speed}")
+                    self._cmds_list.append(f"DRV move_to 0,{distancey},{speed}")
+                    self._cmds_list.append(f"DRV heading_to {3*direction},{speed}")
+                    self._cmds_list.append(f"DRV move_to 0,0,{speed}")
+                    self._cmds_list.append(f"DRV heading_to 0,{speed}")                    
+                    self._run_cmds = True
                 elif cmd.command=="info":
                     self.out_q.put(f"MSG COM ip: {self.comm_ip}.")
                     self.out_q.put(f"MSG COM use uart0: {self.comm_uart0_connected}.")
@@ -121,6 +161,7 @@ class Robot:
 
         while self._inf_loop:
             t_calc = time.ticks_ms()
+
             # Process commands from PC
             while not self.in_q.empty():
                 cmd_raw = self.in_q.get()
@@ -129,10 +170,20 @@ class Robot:
             # Update status led:
             self.led._update()
 
+            # Check cmds list:
+            if self._run_cmds:
+                if self.drive._mode == "idle" and len(self._cmds_list)>0:
+                    msg = self._cmds_list.pop(0)
+                    print(f">pico: executing next cmd: {msg}.")
+                    self.out_q.put(f"MSG executing: {msg}")
+                    self.handle_command(msg)
+                else:
+                    self._run_cmds = bool(len(self._cmds_list)>0)
+
             # Step current drive/mission            
             if self.drive.update():
-                t_calc = time.ticks_diff(time.ticks_ms(), t_calc)
-                if counter==5:
+                t_calc = time.ticks_diff(time.ticks_ms(), t_calc) #calculate drive.update() time.
+                if counter==4:
                     self.out_q.put(f"LOG ({self.drive.last_update_ms}): {self.drive.pose}")
                     counter = 0
                 counter += 1
@@ -145,10 +196,12 @@ class Robot:
                 self.drive._mode = "idle"
 
     def stop(self):
+        self._run_cmds = False
         self.drive.stop()
         self.out_q.put("MSG Robot_is_stopped..")
 
     def close(self):
+        self._run_cmds = False
         self._inf_loop = False
         self.out_q.put("MSG Robot_is_closing..")
         self.drive.close()
