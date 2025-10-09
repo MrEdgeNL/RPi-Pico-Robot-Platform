@@ -23,7 +23,9 @@ There is also a simple PC GUI (Tkinter), which:
 ![Screenshot robot platform.](/pics/RPi_Pico-W_Software_Architecture2.png)
 
 ## First steps...
-<iframe width="560" height="315" src="https://www.youtube.com/embed/dP9MaJGwAcU?si=Hce4M5bGbaMOqMDp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![first robot steps](/pics/RPi-Pico-Robot-Platform_youtube.jpg)](https://youtu.be/dP9MaJGwAcU)
+Only calibration sofar: the average robot distance → ticks_per_mm.
+Placing the robot in right orientation seems to be the hardest part.
 
 ## Communication protocol:
 Simple ascii message, format: "TARGET function [arg1, arg2]"
