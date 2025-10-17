@@ -67,5 +67,8 @@ Left side showing:
 Only calibration sofar: the average robot distance → ticks_per_mm.
 Placing the robot in right orientation seems to be the hardest part.
 
+## Wires & components:
+![Screenshot gui.](/pics/RPi_Pico-W_DIY_electronics_v1.png)
+
 ## More information:
 The why/how about this DIY adventure: [Pico/mPython – smart car DIY](https://retrobuildingtoys.nl/2024/rpi-pico-smart-car/).
